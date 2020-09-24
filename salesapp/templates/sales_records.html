@@ -9,8 +9,9 @@ Manage Sales Records
     Upload the sales csv into the system
 </em>
 <form method="POST" enctype="multipart/form-data">
-{%csrf_token%}
+    {%csrf_token%}
     {{form}}
     <button type="submit" class="btn btn-primary">Upload</button>
 </form>
+
 {%endblock%}

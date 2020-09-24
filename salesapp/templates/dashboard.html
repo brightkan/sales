@@ -5,4 +5,21 @@
 Dashboard
 {% endblock%}
 {% block content%}
+<p>Enter Date Range to recieve a report</p>
+<form method="POST" action="{%url 'sales_report_page'%}">
+    {%csrf_token%}
+    <div class="form-group">
+        <label for="start_date">Start Date</label>
+        <input type="date" class="form-control" name="start_date">
+        <small class="form-text text-muted">Enter start date of the range</small>
+    </div>
+    <div class="form-group">
+        <label for="end_date">End Date</label>
+        <input type="date" class="form-control" name="end_date">
+        <small class="form-text text-muted">Enter end date of the range</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br>
+
 {%endblock%}
