@@ -14,7 +14,19 @@ A tabular display then show all sales conducted in a specific period
 ## How to install
 
 - Install pipenv 
+```bash
+$ pip install pipenv
+```
+- Clone and change to the project directory sales/
+```bash
+$ cd sales/
+```
+-Activate pipenv
+```bash
+$ pipenv shell
+```
 
+- Install Dependency packages
 ```bash
 $ pipenv install --dev
 ```
@@ -23,6 +35,8 @@ $ pipenv install --dev
 $ python manage.py migrate
 $ python manage.py runserver
 ```
+
+- Local server is started at port 8000 http:127.0.0.1:8000
 
 
 
