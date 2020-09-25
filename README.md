@@ -27,7 +27,7 @@ $ pipenv shell
 
 - Install dependency packages
 ```bash
-$ pipenv install --dev
+$ pip install -r requirements.txt
 ```
 - Run the project 
 ```bash
