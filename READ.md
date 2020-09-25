@@ -3,12 +3,11 @@
 This is a web-based system where the store manager can upload a CSV file into system.
 A tabular display then show all sales conducted in a specific period 
 
-## Features
-
+## Prerequisites
+- Python 3.*
 - Django 2.0+
 - Uses [Pipenv](https://github.com/kennethreitz/pipenv) - the officially recommended Python packaging tool from Python.org.
-- Development, Staging and Production settings with [django-configurations](https://django-configurations.readthedocs.org). 
-- Get value insight and debug information while on Development with [django-debug-toolbar](https://django-debug-toolbar.readthedocs.org).
+
 
 
 ## How to install
@@ -21,7 +20,7 @@ $ pip install pipenv
 ```bash
 $ cd sales/
 ```
--Activate pipenv
+- Activate pipenv
 ```bash
 $ pipenv shell
 ```
