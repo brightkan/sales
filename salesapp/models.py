@@ -54,7 +54,7 @@ class Order(models.Model):
 
 
 class CSV(models.Model):
-    file_name = models.FileField(upload_to='csvs')
+    file_name = models.FileField(upload_to='media/csvs/')
     uploaded = models.DateTimeField(auto_now_add=True)
     activated = models.BooleanField(default=False)
 
