@@ -25,7 +25,7 @@ $ cd sales/
 $ pipenv shell
 ```
 
-- Install Dependency packages
+- Install dependency packages
 ```bash
 $ pipenv install --dev
 ```
