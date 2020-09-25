@@ -80,7 +80,6 @@ def create_order_objects(csv_obj):
             if i == 0:
                 pass
             else:
-                print("Program reaches here")
                 region = row[0]
                 country = row[1]
                 item_type = row[2]
