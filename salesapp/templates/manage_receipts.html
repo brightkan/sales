@@ -1,0 +1,84 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{%load javascript_settings_tags %}
+{%block page_title%}
+Manage Receipts
+{% endblock%}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Receipts
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#receiptModal"
+                            style="float:right; margin: 10px">Add Receipt</button>
+                    {%if receipts%}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Receipt Number</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Amount Paid</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Amount Paid In Words</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%for receipt in receipts%}
+                        <tr>
+                            <th scope="row">{{receipt.id}}</th>
+                            <td>{{receipt.customer_name}}</td>
+                            <td>{{receipt.item}}</td>
+                            <td>{{receipt.item.price}}</td>
+                            <td>{{receipt.amount}}</td>
+                            <td>{{receipt.balance}}</td>
+                            <td>{{receipt.amount_in_words}}</td>
+                            <td><button class="btn btn-outline-success">Print Receipt</button></td>
+                        </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                    {%else%}
+                    <h3>No Receipts Available</h3>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="receiptModal" tabindex="-1" role="dialog" aria-labelledby="receipt"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Receipt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div style="color: red; margin: 2px" id="feedback"></div>
+                    <button class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block customJS%}
+<!--CustomJS-->
+<script type="text/javascript">{% javascript_settings %}</script>
+<script type="text/javascript" src="{%static 'customJS/receipt_form.js'%}"></script>
+{%endblock%}
