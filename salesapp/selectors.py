@@ -1,8 +1,5 @@
-from salesapp.models import Order
+from salesapp.models import Receipt
 
 
-def get_all_orders(limit=None):
-    orders = Order.objects.all()
-    if orders:
-        return orders[:limit]
-
+def get_receipt(id):
+    return Receipt.objects.get(pk=id)

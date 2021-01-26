@@ -13,3 +13,7 @@ class ReceiptForm(forms.ModelForm):
     class Meta:
         model = Receipt
         fields = "__all__"
+
+        widgets = {
+            "date": forms.DateInput(attrs={"type": "date"})
+        }

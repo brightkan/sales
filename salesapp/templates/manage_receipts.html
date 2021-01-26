@@ -33,6 +33,7 @@ Manage Receipts
                                 <th scope="col">Balance</th>
                                 <th scope="col">Amount Paid In Words</th>
                                 <th scope="col">Actions</th>
+                                <th scope="col">#</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,7 +46,19 @@ Manage Receipts
                                 <td>{{receipt.amount}}</td>
                                 <td>{{receipt.balance}}</td>
                                 <td>{{receipt.amount_in_words}}</td>
-                                <td><button class="btn btn-outline-success">Print Receipt</button></td>
+                                <td>
+                                    <a href="{%url 'generate_receipt_pdf' receipt.id%}">
+                                        <button class="btn btn-outline-success">Print Receipt</button>
+                                    </a>
+                                </td>
+                                <td>
+                                <td>
+                                    <a  href="{%url 'edit_receipt_page' receipt.id %}" style="color:inherit">Edit</a>
+                                    |
+                                    <a href="{%url 'delete_receipt' receipt.id%}" style="color: inherit"
+                                       onclick="return confirm('Do you want to delete receipt {{receipt.id}}?')">
+                                        Delete</a>
+                                </td>
                             </tr>
                             {%endfor%}
                             </tbody>

@@ -12,19 +12,23 @@ class Stock(models.Model):
     number_available = models.IntegerField()
     initial_quantity = models.IntegerField()
 
-
     def __str__(self):
         return f"{self.name}"
 
 
 class Receipt(models.Model):
+    CASH_OR_CHEQUE = [
+        ("Cash", "Cash"),
+        ("Cheque", "Cheque")
+    ]
+
+    date = models.DateField()
     customer_name = models.CharField(max_length=30)
     item = models.ForeignKey(Stock, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
     amount_in_words = models.CharField(max_length=100)
+    cash_or_cheque = models.CharField(max_length=7, choices=CASH_OR_CHEQUE)
     balance = models.IntegerField()
 
     def __str__(self):
         return f"Customer Name: {self.customer_name} Receipt: {self.id}"
-
-
