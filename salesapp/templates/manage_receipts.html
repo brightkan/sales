@@ -17,34 +17,40 @@ Manage Receipts
                     <button class="btn btn-primary" data-toggle="modal" data-target="#receiptModal"
                             style="float:right; margin: 10px">Add Receipt</button>
                     {%if receipts%}
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Receipt Number</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Item</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Amount Paid</th>
-                            <th scope="col">Balance</th>
-                            <th scope="col">Amount Paid In Words</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {%for receipt in receipts%}
-                        <tr>
-                            <th scope="row">{{receipt.id}}</th>
-                            <td>{{receipt.customer_name}}</td>
-                            <td>{{receipt.item}}</td>
-                            <td>{{receipt.item.price}}</td>
-                            <td>{{receipt.amount}}</td>
-                            <td>{{receipt.balance}}</td>
-                            <td>{{receipt.amount_in_words}}</td>
-                            <td><button class="btn btn-outline-success">Print Receipt</button></td>
-                        </tr>
-                        {%endfor%}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <div class="form-group ">
+                            <i class="fas fa-search " aria-hidden="true"></i>
+                            <input id="search_input" type="text" class="form-control" placeholder="Search....">
+                        </div>
+                        <table class="table" id="receipts-table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Receipt Number</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Amount Paid</th>
+                                <th scope="col">Balance</th>
+                                <th scope="col">Amount Paid In Words</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for receipt in receipts%}
+                            <tr>
+                                <th scope="row">{{receipt.id}}</th>
+                                <td>{{receipt.customer_name}}</td>
+                                <td>{{receipt.item}}</td>
+                                <td>{{receipt.item.price}}</td>
+                                <td>{{receipt.amount}}</td>
+                                <td>{{receipt.balance}}</td>
+                                <td>{{receipt.amount_in_words}}</td>
+                                <td><button class="btn btn-outline-success">Print Receipt</button></td>
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
                     {%else%}
                     <h3>No Receipts Available</h3>
                     {%endif%}
@@ -81,4 +87,5 @@ Manage Receipts
 <!--CustomJS-->
 <script type="text/javascript">{% javascript_settings %}</script>
 <script type="text/javascript" src="{%static 'customJS/receipt_form.js'%}"></script>
+<script type="text/javascript" src="{%static 'customJS/receipt_table_search.js'%}"></script>
 {%endblock%}

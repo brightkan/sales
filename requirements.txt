@@ -2,3 +2,4 @@ django==3.1.1
 num2words
 django-crispy-forms
 django-javascript-settings
+xhtml2pdf
