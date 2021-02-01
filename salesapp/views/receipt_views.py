@@ -7,8 +7,7 @@ from num2words import num2words
 from salesapp.forms import ReceiptForm
 from salesapp.models import Receipt
 from salesapp.procedures import render_to_pdf
-from salesapp.selectors import get_receipt
-from salesapp.services import get_item
+from salesapp.selectors import get_receipt, get_item
 
 
 def manage_receipts_page(request):
@@ -63,10 +62,34 @@ def convert_amount_to_words(request):
 
 def get_balance(request):
     item_id = request.GET["item_id"]
+    amount = int(request.GET["amount"])
+    quantity = int(request.GET["quantity"])
     item = get_item(item_id)
-    amount = request.GET["amount"]
-    balance = int(amount) - item.price
+    balance = amount - item.price * quantity
     return JsonResponse({'success': True, 'balance': balance})
+
+
+def get_number_in_stock(request):
+    item_id = request.GET["item_id"]
+    quantity = int(request.GET["quantity"])
+    amount = int(request.GET["amount"])
+    item = get_item(item_id)
+    message = "Success"
+
+    if quantity < 1:
+        message = "Quantity should be at least 1"
+        return JsonResponse({'success': True, 'number_in_stock': item.number_in_stock, 'message': message})
+    if not item_id:
+        message = "Refresh the page. And select the item first."
+
+    remaining_items = item.number_in_stock - quantity
+    if remaining_items < 0:
+        message = "Insufficient stock for the item"
+
+    balance = amount - item.price * quantity
+
+    return JsonResponse({'success': True, 'number_in_stock': remaining_items, 'message': message,
+                         'balance': balance})
 
 
 def generate_receipt_pdf(request, receipt_id):

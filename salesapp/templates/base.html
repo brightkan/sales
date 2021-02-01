@@ -24,15 +24,19 @@
       <div class="sb-sidenav-menu">
         <div class="nav">
           <div class="sb-sidenav-menu-heading">Core</div>
-          <a class="nav-link {{report}}" href="#">
+          <a class="nav-link {{manage_users}}" href="#">
             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
             Manage Users
           </a>
-          <a class="nav-link {{report}}" href="#">
+          <a class="nav-link {{manage_items}}" href="{%url 'manage_items' %}">
+            <div class="sb-nav-link-icon"><i class="fas fa-tv"></i></div>
+            Manage Items
+          </a>
+          <a class="nav-link {{manage_stock}}" href="#">
             <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
             Manage Stock
           </a>
-          <a class="nav-link {{report}}" href="{%url 'manage_receipts'%}">
+          <a class="nav-link {{manage_receipts}}" href="{%url 'manage_receipts'%}">
             <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
             Manage Receipts
           </a>

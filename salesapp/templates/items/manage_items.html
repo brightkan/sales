@@ -1,0 +1,117 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{%load javascript_settings_tags %}
+{%block page_title%}
+Manage Items
+{% endblock%}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Items
+                </div>
+                <div class="card-body">
+                     <button class="btn btn-success" data-toggle="modal"
+                             data-target="#trackSettingsModal"
+                            style="float:right; margin: 10px">Track Settings</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#itemModal"
+                            style="float:right; margin: 10px">Add Item</button>
+                    {%if items%}
+                    <div class="table-responsive">
+                        <div class="form-group ">
+                            <i class="fas fa-search " aria-hidden="true"></i>
+                            <input id="search_input" type="text" class="form-control" placeholder="Search....">
+                        </div>
+                        <table class="table" id="items-table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Item Number</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Number in Stock</th>
+                                <th scope="col">Demand</th>
+                                <th scope="col">#</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for item in items%}
+                            <tr>
+                                <th scope="row">{{item.id}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.type}}</td>
+                                <td>{{item.cost}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.number_in_stock}}</td>
+                                <td>Not Moving</td>
+                                <td>
+                                    <a  href="{%url 'edit_item_page' item.id %}" style="color:inherit">Edit</a>
+                                    |
+                                    <a href="{%url 'delete_item' item.id%}" style="color: inherit"
+                                       onclick="return confirm('Do you want to delete item {{item.id}}?')">
+                                        Delete</a>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                    {%else%}
+                    <h3>No Items Available</h3>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="item"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div style="color: red; margin: 2px" id="feedback"></div>
+                    <button class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="trackSettingsModal" tabindex="-1" role="dialog" aria-labelledby="item"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{%url 'edit_track_setting'%}">
+                    {% csrf_token %}
+                    {{ track_settings_form|crispy }}
+                    <div style="color: red; margin: 2px" id="feedback"></div>
+                    <button class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
