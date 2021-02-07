@@ -1,5 +1,20 @@
 from django.db import models
+from django.db.models import Sum
 from django.utils import timezone
+
+
+class TrackSetting(models.Model):
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(TrackSetting, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
 
 
 class Item(models.Model):
@@ -11,6 +26,60 @@ class Item(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    @property
+    def total_quantity_sold(self):
+        track_setting = TrackSetting.load()
+        start_date_str = track_setting.start_date.isoformat()
+        end_date_str = track_setting.end_date.isoformat()
+        receipts = Receipt.objects.filter(item=self, date__range=[start_date_str, end_date_str])
+        sum = receipts.aggregate(Sum('quantity'))
+        quantity = sum['quantity__sum']
+        if quantity is None:
+            return 0
+        return quantity
+
+    @property
+    def total_amount_sold(self):
+        return self.price * self.total_quantity_sold
+
+    @property
+    def total_cost(self):
+        return self.cost * self.total_quantity_sold
+
+    @property
+    def total_profit(self):
+        return self.total_amount_sold - self.total_cost
+
+
+    @property
+    def total_quantity_stocked(self):
+        track_setting = TrackSetting.load()
+        start_date_str = track_setting.start_date.isoformat()
+        end_date_str = track_setting.end_date.isoformat()
+        item_stockings = ItemStocking.objects.filter(item=self, date__range=[start_date_str, end_date_str])
+        sum = item_stockings.aggregate(Sum('quantity'))
+        quantity = sum['quantity__sum']
+        if quantity is None:
+            return 0
+        return quantity
+
+    @property
+    def demand_percentage(self):
+        try:
+            demand_percentage = ((self.total_quantity_sold / self.total_quantity_stocked) * 100)
+        except ZeroDivisionError:
+            return 0
+        return int(demand_percentage)
+
+    @property
+    def demand_percentage_str(self):
+        if self.demand_percentage < 30 or self.demand_percentage == 0:
+            return "Item not moving"
+        elif 30 < self.demand_percentage < 60:
+            return "Average Demand"
+        else:
+            return "Moving Fast"
 
 
 class Receipt(models.Model):
@@ -39,6 +108,18 @@ class Receipt(models.Model):
     def __str__(self):
         return f"Customer Name: {self.customer_name} Receipt: {self.id}"
 
+    @property
+    def profit(self):
+        return self.total_price - self.total_cost
+
+    @property
+    def total_price(self):
+        return self.item.price * self.quantity
+
+    @property
+    def total_cost(self):
+        return self.item.cost * self.quantity
+
 
 class ItemStocking(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -54,17 +135,3 @@ class ItemStocking(models.Model):
 
     def __str__(self):
         return f"Item Stocking: {self.id}"
-
-
-class TrackSetting(models.Model):
-    start_date = models.DateField(default=timezone.now)
-    end_date = models.DateField(default=timezone.now)
-
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super(TrackSetting, self).save(*args, **kwargs)
-
-    @classmethod
-    def load(cls):
-        obj, created = cls.objects.get_or_create(pk=1)
-        return obj

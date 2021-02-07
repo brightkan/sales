@@ -26,9 +26,12 @@ Manage Receipts
                             <thead>
                             <tr>
                                 <th scope="col">Receipt Number</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Customer</th>
                                 <th scope="col">Item</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Price</th>
                                 <th scope="col">Amount Paid</th>
                                 <th scope="col">Balance</th>
                                 <th scope="col">Amount Paid In Words</th>
@@ -40,9 +43,12 @@ Manage Receipts
                             {%for receipt in receipts%}
                             <tr>
                                 <th scope="row">{{receipt.id}}</th>
+                                <td>{{receipt.date}}</td>
                                 <td>{{receipt.customer_name}}</td>
                                 <td>{{receipt.item}}</td>
                                 <td>{{receipt.item.price}}</td>
+                                <td>{{receipt.quantity}}</td>
+                                <td>{{receipt.total_price}}</td>
                                 <td>{{receipt.amount}}</td>
                                 <td>{{receipt.balance}}</td>
                                 <td>{{receipt.amount_in_words}}</td>
@@ -89,7 +95,7 @@ Manage Receipts
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div style="color: red; margin: 2px" id="feedback"></div>
-                    <button class="btn btn-primary">Save Changes</button>
+                    <button class="btn btn-primary" type="submit">Save Changes</button>
                 </form>
             </div>
         </div>

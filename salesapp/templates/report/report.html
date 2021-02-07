@@ -1,0 +1,86 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{%load javascript_settings_tags %}
+{%block page_title%}
+Report
+{% endblock%}
+{% block content%}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Report Track Range
+                </div>
+                <div class="card-body">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div style="color: red; margin: 2px" id="feedback"></div>
+                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            <div class="card">
+                <div class="card-header">
+                    Report
+                </div>
+                <div class="card-body">
+                    <a href="{%url 'generate_report_pdf'%}">
+                        <button class="btn btn-danger"
+                                style="float:right;margin-bottom:20px">Download Report</button>
+                    </a>
+                    {%if items%}
+                    <div class="table-responsive">
+                        <div class="form-group ">
+                            <i class="fas fa-search " aria-hidden="true"></i>
+                            <input id="search_input" type="text" class="form-control" placeholder="Search....">
+                        </div>
+                        <table class="table" id="items-table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Item Number</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number in Stock</th>
+                                <th scope="col">Total Quantity Sold</th>
+                                <th scope="col">Total Quantity Stocked</th>
+                                <th scope="col">Total Amount Sold</th>
+                                <th scope="col">Total Cost</th>
+                                <th scope="col">Total Profit</th>
+                                <th scope="col">Demand Percentage</th>
+                                <th scope="col">Demand</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for item in items%}
+                            <tr>
+                                <th scope="row">{{item.id}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.number_in_stock}}</td>
+                                <td>{{item.total_quantity_sold}}</td>
+                                <td>{{item.total_quantity_stocked}}</td>
+                                <td>{{item.total_amount_sold}}</td>
+                                <td>{{item.total_cost}}</td>
+                                <td>{{item.total_profit}}</td>
+                                <td>{{item.demand_percentage}}</td>
+                                <td>{{item.demand_percentage_str}}</td>
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                    {%else%}
+                    <h3>No items to track</h3>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

@@ -95,7 +95,7 @@ def get_number_in_stock(request):
 def generate_receipt_pdf(request, receipt_id):
     receipt = get_receipt(receipt_id)
     context = {
-        "receipt": receipt
+        "receipt": receipt,
     }
     pdf = render_to_pdf('pdfs/receipt.html', context)
     return HttpResponse(pdf, content_type='application/pdf')

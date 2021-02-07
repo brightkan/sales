@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+</head>
+<style>
+     body {
+      font-size:10px;
+    }
+
+    table td, th {
+    padding:5px}
+</style>
+<body>
+<h1>Report</h1>
+<h4 style="float:right">Date Range: {{date_range.start_date}} to {{date_range.end_date}}</h4>
+<table border="1">
+    <thead>
+    <tr>
+        <th scope="col">Item Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Number in Stock</th>
+        <th scope="col">Total Quantity Sold</th>
+        <th scope="col">Total Quantity Stocked</th>
+        <th scope="col">Total Amount Sold</th>
+        <th scope="col">Total Cost</th>
+        <th scope="col">Total Profit</th>
+        <th scope="col">Demand Percentage</th>
+        <th scope="col">Demand</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%for item in items%}
+    <tr>
+        <th scope="row">{{item.id}}</th>
+        <td>{{item.name}}</td>
+        <td>{{item.number_in_stock}}</td>
+        <td>{{item.total_quantity_sold}}</td>
+        <td>{{item.total_quantity_stocked}}</td>
+        <td>{{item.total_amount_sold}}</td>
+        <td>{{item.total_cost}}</td>
+        <td>{{item.total_profit}}</td>
+        <td>{{item.demand_percentage}}</td>
+        <td>{{item.demand_percentage_str}}</td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+</body>
+</html>

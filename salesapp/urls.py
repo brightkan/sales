@@ -4,6 +4,8 @@ from salesapp.views.auth_views import login_page, logout_view
 from salesapp.views.item_views import manage_items_page, edit_item_page, delete_item, edit_track_setting
 from salesapp.views.receipt_views import manage_receipts_page, convert_amount_to_words, get_balance, \
     generate_receipt_pdf, edit_receipt_page, delete_receipt, get_number_in_stock
+from salesapp.views.report_views import report_page, generate_report_pdf
+from salesapp.views.stock_views import manage_item_stockings_page, edit_item_stocking_page, delete_item_stocking
 
 urlpatterns = [
     path('', login_page, name='login_page'),
@@ -19,7 +21,11 @@ urlpatterns = [
     path('edit_item_page/<int:item_id>/', edit_item_page, name="edit_item_page"),
     path('delete_item/<int:item_id>/', delete_item, name="delete_item"),
     path('edit_track_setting/', edit_track_setting, name="edit_track_setting"),
-
+    path('manage_item_stockings/', manage_item_stockings_page, name="manage_item_stockings"),
+    path('edit_item_stocking/<int:item_stocking_id>/', edit_item_stocking_page, name="edit_item_stocking"),
+    path('delete_item_stocking/<int:item_stocking_id>/', delete_item_stocking, name="delete_item_stocking"),
+    path('report/', report_page, name="report"),
+    path('generate_report_pdf/', generate_report_pdf, name="generate_report_pdf"),
 ]
 
 

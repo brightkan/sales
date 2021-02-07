@@ -14,8 +14,8 @@ Manage Items
                     Items
                 </div>
                 <div class="card-body">
-                     <button class="btn btn-success" data-toggle="modal"
-                             data-target="#trackSettingsModal"
+                    <button class="btn btn-success" data-toggle="modal"
+                            data-target="#trackSettingsModal"
                             style="float:right; margin: 10px">Track Settings</button>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#itemModal"
                             style="float:right; margin: 10px">Add Item</button>
@@ -34,6 +34,9 @@ Manage Items
                                 <th scope="col">Cost</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Number in Stock</th>
+                                <th scope="col">Total Quantity Sold</th>
+                                <th scope="col">Total Quantity Stocked</th>
+                                <th scope="col">Demand Percentage</th>
                                 <th scope="col">Demand</th>
                                 <th scope="col">#</th>
                             </tr>
@@ -47,7 +50,10 @@ Manage Items
                                 <td>{{item.cost}}</td>
                                 <td>{{item.price}}</td>
                                 <td>{{item.number_in_stock}}</td>
-                                <td>Not Moving</td>
+                                <td>{{item.total_quantity_sold}}</td>
+                                <td>{{item.total_quantity_stocked}}</td>
+                                <td>{{item.demand_percentage}}</td>
+                                <td>{{item.demand_percentage_str}}</td>
                                 <td>
                                     <a  href="{%url 'edit_item_page' item.id %}" style="color:inherit">Edit</a>
                                     |

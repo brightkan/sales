@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper
 from django import forms
 
-from salesapp.models import Item, Receipt, TrackSetting
+from salesapp.models import Item, Receipt, TrackSetting, ItemStocking
 
 
 class ItemForm(forms.ModelForm):
@@ -29,6 +29,16 @@ class TrackSettingForm(forms.ModelForm):
 class ReceiptForm(forms.ModelForm):
     class Meta:
         model = Receipt
+        fields = "__all__"
+
+        widgets = {
+            "date": forms.DateInput(attrs={"type": "date"})
+        }
+
+
+class ItemStockingForm(forms.ModelForm):
+    class Meta:
+        model = ItemStocking
         fields = "__all__"
 
         widgets = {
